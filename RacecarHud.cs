@@ -148,7 +148,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
     }
 
     private void InitWheel(PowerUpMeter powerUpMeter) {
-        var wheel = new GameObject("Fist");
+        var wheel = new GameObject("Wheel");
 
         var img = wheel.AddComponent<Image>();
         img.type = Image.Type.Filled;
