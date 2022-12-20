@@ -9,12 +9,14 @@ public static class Config {
         refreshFistOnPunch,
         refreshFistOnSwitch,
         refreshGunOnSwitch,
-        refreshOnMusic;
+        refreshOnMusic,
+        refreshOnBossBar;
 
     public static bool RefreshFistOnPunch => refreshFistOnPunch.Value;
     public static bool RefreshFistOnSwitch => refreshFistOnSwitch.Value;
     public static bool RefreshGunOnSwitch => refreshGunOnSwitch.Value;
-    public static bool RefreshOnBattleMusic => refreshOnMusic.Value;
+    public static bool RefreshIconsOnBattleMusic => refreshOnMusic.Value;
+    public static bool RefreshIconsOnBossHealthBar => refreshOnBossBar.Value;
 
     private static ConfigEntry<float>
         iconFade,
@@ -38,6 +40,7 @@ public static class Config {
         refreshFistOnSwitch = cfg.Bind("Refresh", "FistSwitch", true, "bar");
         refreshGunOnSwitch = cfg.Bind("Refresh", "GunSwitch", true, "");
         refreshOnMusic = cfg.Bind("Refresh", "BattleMusic", true);
+        refreshOnBossBar = cfg.Bind("Refresh", "BossHealthBar", true);
 
         iconFade = cfg.Bind("FadeTime", "WeaponIcons", 4.0f);
         wheelFade = cfg.Bind("FadeTime", "RailcannonMeter", 5.0f);

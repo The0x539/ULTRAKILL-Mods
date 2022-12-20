@@ -23,10 +23,12 @@ public sealed class Plugin : BaseUnityPlugin {
     public void Update() {
         _ = RacecarHud.Instance;
 
-        var musicManager = MusicManager.Instance;
-        if (musicManager != null) {
-            if (musicManager.battleTheme.volume > 0 || musicManager.bossTheme.volume > 0) {
-                RefreshBothIcons();
+        if (RcHud.Config.RefreshIconsOnBattleMusic) {
+            var musicManager = MusicManager.Instance;
+            if (musicManager != null) {
+                if (musicManager.battleTheme.volume > 0 || musicManager.bossTheme.volume > 0) {
+                    RefreshBothIcons();
+                }
             }
         }
     }
@@ -60,8 +62,7 @@ public sealed class Plugin : BaseUnityPlugin {
     [HarmonyPrefix]
     [HarmonyPatch(typeof(BossHealthBar), "Update")]
     static void RefreshBothIcons() {
-        if (RcHud.Config.RefreshOnBattleMusic) {
-
+        if (RcHud.Config.RefreshIconsOnBossHealthBar) {
             RacecarHud.Instance.RefreshFist();
             RacecarHud.Instance.RefreshGun();
         }
