@@ -9,12 +9,6 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
     private static ManualLogSource log = new("");
     internal static void SetLogger(ManualLogSource logger) => log = logger;
 
-    // configuration
-    private const float gunScale = 0.1f;
-    private const float fistScale = 1.25f;
-    private const float iconFade = 4;
-    private const float wheelFade = 5;
-
     private bool initialized = false;
 
     private GameObject overlay = new();
@@ -24,13 +18,13 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
 
     private Crosshair crosshairReference = new();
 
-    private float fistFade = iconFade;
-    private float gunFade = iconFade;
+    private float fistFade = Config.IconFadeTime;
+    private float gunFade = Config.IconFadeTime;
 
     internal bool fadeIcons;
 
-    public void RefreshFist() => this.fistFade = iconFade;
-    public void RefreshGun() => this.gunFade = iconFade;
+    public void RefreshFist() => this.fistFade = Config.IconFadeTime;
+    public void RefreshGun() => this.gunFade = Config.IconFadeTime;
 
     public void Update() {
         if (!this.TryInit()) {
@@ -44,7 +38,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
 
         var gunIcon = this.gun.GetComponent<Image>();
         var gunTransform = this.gun.GetComponent<RectTransform>();
-        gunTransform.sizeDelta = new Vector2(gunIcon.mainTexture.width, gunIcon.mainTexture.height) * gunScale;
+        gunTransform.sizeDelta = GetTexSize(gunIcon) * Config.GunIconScale;
 
         var weaponCharges = WeaponCharges.Instance;
         var cbs = ColorBlindSettings.Instance;
@@ -58,7 +52,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
     }
 
     private void UpdateFade(ref float fade, GameObject icon) {
-        fade = this.fadeIcons ? Mathf.MoveTowards(fade, 0, Time.deltaTime) : iconFade;
+        fade = this.fadeIcons ? Mathf.MoveTowards(fade, 0, Time.deltaTime) : Config.IconFadeTime;
         icon.GetComponent<CanvasRenderer>().SetAlpha(Mathf.Min(1, fade));
     }
 
@@ -123,8 +117,8 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         rt.SetParent(this.overlay.GetComponent<RectTransform>());
         rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
         rt.pivot = new(1, 0.5f);
-        rt.sizeDelta = new Vector2(icon.mainTexture.width, icon.mainTexture.height) * fistScale;
-        rt.anchoredPosition = new(-50, 0);
+        rt.sizeDelta = GetTexSize(icon) * Config.FistIconScale;
+        rt.anchoredPosition = new(-Config.FistIconOffset, 0);
 
         this.fist = fist;
     }
@@ -142,7 +136,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         rt.SetParent(this.overlay.GetComponent<RectTransform>());
         rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
         rt.pivot = new(0, 0.5f);
-        rt.anchoredPosition = new(45, 0);
+        rt.anchoredPosition = new(Config.GunIconOffset, 0);
 
         this.gun = gun;
     }
@@ -176,8 +170,10 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         stfa.maxFill = 1;
 
         var fob = wheel.AddComponent<FadeOutBars>();
-        fob.fadeOutTime = wheelFade;
+        fob.fadeOutTime = Config.WheelFadeTime;
 
         this.wheel = wheel;
     }
+
+    private static Vector2 GetTexSize(Image icon) => new(icon.mainTexture.width, icon.mainTexture.height);
 }

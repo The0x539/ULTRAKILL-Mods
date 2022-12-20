@@ -12,6 +12,7 @@ namespace LeatHud;
 [BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 public sealed class Plugin : BaseUnityPlugin {
     public void Awake() {
+        LeatHud.Config.Init(this.Config);
         Harmony.CreateAndPatchAll(typeof(Plugin));
     }
 
@@ -32,23 +33,38 @@ public sealed class Plugin : BaseUnityPlugin {
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(FistControl), "UpdateFistIcon")]
+    static void RefreshFistIconOnSwitch() {
+        if (LeatHud.Config.RefreshFistOnSwitch) {
+            RacecarHud.Instance.RefreshFist();
+        }
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(FistControl), "UpdateFistIcon")]
     [HarmonyPatch(typeof(Punch), "PunchStart")]
-    static void RefreshFistIcon() {
-        RacecarHud.Instance.RefreshFist();
+    static void RefreshFistIconOnPunch() {
+        if (LeatHud.Config.RefreshFistOnPunch) {
+            RacecarHud.Instance.RefreshFist();
+        }
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(GunControl), "SwitchWeapon", new Type[] { typeof(int) })]
     [HarmonyPatch(typeof(GunControl), "SwitchWeapon", new Type[] { typeof(int), typeof(List<GameObject>), typeof(bool), typeof(bool) })]
     static void RefreshGunIcon() {
-        RacecarHud.Instance.RefreshGun();
+        if (LeatHud.Config.RefreshGunOnSwitch) {
+            RacecarHud.Instance.RefreshGun();
+        }
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(BossHealthBar), "Update")]
     static void RefreshBothIcons() {
-        RacecarHud.Instance.RefreshFist();
-        RacecarHud.Instance.RefreshGun();
+        if (LeatHud.Config.RefreshOnBattleMusic) {
+
+            RacecarHud.Instance.RefreshFist();
+            RacecarHud.Instance.RefreshGun();
+        }
     }
 
     [HarmonyPostfix]
