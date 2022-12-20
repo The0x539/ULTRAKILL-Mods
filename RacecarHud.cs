@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace LeatHud;
+namespace RcHud;
 
 public sealed class RacecarHud : MonoSingleton<RacecarHud> {
     private static ManualLogSource log = new("");

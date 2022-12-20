@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 
-namespace LeatHud;
+namespace RcHud;
 
 #nullable disable
 
