@@ -36,9 +36,9 @@ public static class Config {
     public static float GunIconOffset => gunOffset.Value;
 
     public static void Init(ConfigFile cfg) {
-        refreshFistOnPunch = cfg.Bind("Refresh", "Punch", true, "foo");
-        refreshFistOnSwitch = cfg.Bind("Refresh", "FistSwitch", true, "bar");
-        refreshGunOnSwitch = cfg.Bind("Refresh", "GunSwitch", true, "");
+        refreshFistOnPunch = cfg.Bind("Refresh", "Punch", true);
+        refreshFistOnSwitch = cfg.Bind("Refresh", "FistSwitch", true);
+        refreshGunOnSwitch = cfg.Bind("Refresh", "GunSwitch", true);
         refreshOnMusic = cfg.Bind("Refresh", "BattleMusic", true);
         refreshOnBossBar = cfg.Bind("Refresh", "BossHealthBar", true);
 
