@@ -6,6 +6,9 @@ i realized i personally wanted something like this, but there wasn't anything ev
 # screenshots
 give me some good ones and i'll add them here
 
+oh yeah, i did make [a video](https://www.youtube.com/watch?v=Gyw0B9_qMYc).
+enjoy the bad gameplay.
+
 # installation
 1. install [BepInEx](https://github.com/BepInEx/BepInEx)
 2. create an `RcHud` directory in `ULTRAKILL/BepInEx/plugins/`
