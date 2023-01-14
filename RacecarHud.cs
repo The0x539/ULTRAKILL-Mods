@@ -40,6 +40,10 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         var gunTransform = this.gun.GetComponent<RectTransform>();
         gunTransform.sizeDelta = GetTexSize(gunIcon) * Config.GunIconScale;
 
+        var weaponWheelVisible = WeaponWheel.Instance.isActiveAndEnabled;
+        this.gun.SetActive(!weaponWheelVisible);
+        this.fist.SetActive(!weaponWheelVisible);
+
         var weaponCharges = WeaponCharges.Instance;
         var cbs = ColorBlindSettings.Instance;
 
