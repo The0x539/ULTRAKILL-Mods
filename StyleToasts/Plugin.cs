@@ -16,24 +16,40 @@ public sealed class Plugin : BaseUnityPlugin {
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Coin), "RicoshotPointsCheck")]
-    static void Foo(Rigidbody ___rb) {
+    static void RicoshotPointsCheck(Rigidbody ___rb) {
         styleLocation = ___rb.position;
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.AddPoints))]
-    static void SpawnText(StyleHUD __instance, int points, string pointID, GameObject sourceWeapon, EnemyIdentifier eid, int count, string prefix, string postfix) {
-        var maybePos = styleLocation;
-        styleLocation = null;
-        if (maybePos == null) {
+    static void Foo(string pointID, EnemyIdentifier eid) {
+        if (eid is null || pointID is not ("ultrakill.fireworks" or "ultrakill.instakill")) {
             return;
         }
 
-        var pos = maybePos.Value;
+        styleLocation ??= eid.GetComponent<Rigidbody>()?.position;
+    }
 
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.AddPoints))]
+    static void Bar(StyleHUD __instance, string pointID, int count, string prefix, string postfix) {
+        var pos = styleLocation;
+        styleLocation = null;
+        if (pos == null) {
+            return;
+        }
+
+        var text = string.Concat("+ ", prefix, __instance.GetLocalizedName(pointID), postfix);
+        if (count >= 0) {
+            text += $" x{count}";
+        }
+
+        SpawnText(pos.Value, text);
+    }
+
+    private static void SpawnText(Vector3 position, string text) {
         var obj = new GameObject();
-        var toast = obj.AddComponent<ToastText>();
-        obj.transform.position = pos;
-        toast.Text = prefix + __instance.GetLocalizedName(pointID) + postfix; ;
+        obj.AddComponent<ToastText>().Text = text;
+        obj.transform.position = position;
     }
 }
