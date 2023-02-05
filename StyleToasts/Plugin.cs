@@ -27,7 +27,8 @@ public sealed class Plugin : BaseUnityPlugin {
             return;
         }
 
-        styleLocation ??= eid.GetComponent<Rigidbody>()?.position;
+        var rb = eid.GetComponent<Rigidbody>();
+        styleLocation ??= rb.worldCenterOfMass;
     }
 
     [HarmonyPostfix]
