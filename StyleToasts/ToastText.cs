@@ -43,10 +43,14 @@ public sealed class ToastText : MonoBehaviour {
             this.textComponent.canvasRenderer.SetAlpha(a);
         }
 
-        this.transform.Translate(Vector3.up * Time.deltaTime);
         var myPos = this.transform.position;
         var camPos = Camera.main.transform.position;
-        var behind = myPos - (camPos - myPos);
-        this.transform.LookAt(behind);
+        var delta = camPos - myPos;
+
+        var distanceScale = Mathf.Log10(delta.magnitude);
+
+        this.transform.Translate(Vector3.up * Time.deltaTime * distanceScale);
+        this.transform.localScale = Vector3.one * 0.02f * distanceScale;
+        this.transform.LookAt(myPos - delta);
     }
 }
