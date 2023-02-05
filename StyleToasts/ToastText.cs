@@ -23,7 +23,7 @@ public sealed class ToastText : MonoBehaviour {
         var canvas = overlay.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.sortingOrder = 1000;
-        canvas.referencePixelsPerUnit = 20;
+        canvas.scaleFactor = 5f;
 
         overlay.AddComponent<GraphicRaycaster>();
     }
@@ -42,27 +42,17 @@ public sealed class ToastText : MonoBehaviour {
         obj.AddComponent<CanvasRenderer>();
         rt.pivot = rt.anchorMin = rt.anchorMax = new Vector2(0.5f, 0.5f);
         rt.parent = overlay.transform;
-        //rt.localScale = new Vector3(0.125f, 0.125f, 0.125f);
+        rt.localScale = Vector3.one * 0.01f;
+        rt.sizeDelta = Vector2.one * 500;
 
         var text = obj.AddComponent<Text>();
         text.text = "Text";
         text.font = font;
-        text.fontSize = 60;
+        text.fontSize = 50;
         text.alignment = TextAnchor.MiddleCenter;
         text.color = Color.white;
+        // TODO: it still gets antialiased kinda
+        text.mainTexture.filterMode = FilterMode.Point;
         this.textComponent = text;
-    }
-
-    private static GameObject CreateOverlay() {
-        var overlay = new GameObject("Overlay");
-
-        var canvas = overlay.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.WorldSpace;
-        canvas.sortingOrder = 1000;
-        canvas.referencePixelsPerUnit = 20;
-
-        overlay.AddComponent<GraphicRaycaster>();
-
-        return overlay;
     }
 }
