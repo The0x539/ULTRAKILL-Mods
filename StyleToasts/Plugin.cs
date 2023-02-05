@@ -12,13 +12,29 @@ public sealed class Plugin : BaseUnityPlugin {
         Harmony.CreateAndPatchAll(this.GetType());
     }
 
-    [HarmonyPostfix]
+    private static Vector3? styleLocation = null;
+
+    [HarmonyPrefix]
     [HarmonyPatch(typeof(Coin), "RicoshotPointsCheck")]
     static void Foo(Rigidbody ___rb) {
-        NewMovement.Instance.rb.position = ___rb.position;
+        styleLocation = ___rb.position;
+    }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.AddPoints))]
+    static void SpawnText(StyleHUD __instance, int points, string pointID, GameObject sourceWeapon, EnemyIdentifier eid, int count, string prefix, string postfix) {
+        var maybePos = styleLocation;
+        styleLocation = null;
+        if (maybePos == null) {
+            return;
+        }
+
+        var pos = maybePos.Value;
 
         var obj = new GameObject();
-        obj.AddComponent<ToastText>();
-        //obj.transform.position = ___rb.position;
+        var toast = obj.AddComponent<ToastText>();
+        obj.transform.position = pos;
+        //toast.Text = prefix + __instance.GetLocalizedName(pointID) + postfix; ;
+        System.Console.WriteLine("e");
     }
 }
