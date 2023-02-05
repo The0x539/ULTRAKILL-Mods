@@ -6,6 +6,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RcHud", "RcHud\RcHud.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroSkip", "IntroSkip\IntroSkip.csproj", "{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartupDummy", "StartupDummy\StartupDummy.csproj", "{174313E8-C94E-4D03-8A95-DE8B49F9B793}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB} = {B0090E72-FF6F-42A3-AF36-376C71E8EBEB}
+		{EC8BF9FE-7D80-4099-852C-2C2BEE50EB98} = {EC8BF9FE-7D80-4099-852C-2C2BEE50EB98}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +26,10 @@ Global
 		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{174313E8-C94E-4D03-8A95-DE8B49F9B793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{174313E8-C94E-4D03-8A95-DE8B49F9B793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{174313E8-C94E-4D03-8A95-DE8B49F9B793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{174313E8-C94E-4D03-8A95-DE8B49F9B793}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
