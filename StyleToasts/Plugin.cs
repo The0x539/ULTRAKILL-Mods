@@ -34,7 +34,6 @@ public sealed class Plugin : BaseUnityPlugin {
         var obj = new GameObject();
         var toast = obj.AddComponent<ToastText>();
         obj.transform.position = pos;
-        //toast.Text = prefix + __instance.GetLocalizedName(pointID) + postfix; ;
-        System.Console.WriteLine("e");
+        toast.Text = prefix + __instance.GetLocalizedName(pointID) + postfix; ;
     }
 }
