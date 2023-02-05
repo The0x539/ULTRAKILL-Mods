@@ -28,16 +28,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="lib\" />
+		<Folder Include="..\lib\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
-			<HintPath>lib\Assembly-CSharp.dll</HintPath>
+			<HintPath>..\lib\Assembly-CSharp.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 		<Reference Include="UnityEngine.UI">
-			<HintPath>lib\UnityEngine.UI.dll</HintPath>
+			<HintPath>..\lib\UnityEngine.UI.dll</HintPath>
 			<Private>False</Private>
 		</Reference>
 	</ItemGroup>
