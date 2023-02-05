@@ -1,9 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RcHud", "RcHud/RcHud.csproj", "{EC8BF9FE-7D80-4099-852C-2C2BEE50EB98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RcHud", "RcHud\RcHud.csproj", "{EC8BF9FE-7D80-4099-852C-2C2BEE50EB98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntroSkip", "IntroSkip\IntroSkip.csproj", "{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +16,10 @@ Global
 		{EC8BF9FE-7D80-4099-852C-2C2BEE50EB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC8BF9FE-7D80-4099-852C-2C2BEE50EB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC8BF9FE-7D80-4099-852C-2C2BEE50EB98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@ namespace RcHud;
 public sealed class Plugin : BaseUnityPlugin {
     public void Awake() {
         RcHud.Config.Init(this.Config);
-        Harmony.CreateAndPatchAll(typeof(Plugin));
+        Harmony.CreateAndPatchAll(this.GetType());
     }
 
     public void Start() {

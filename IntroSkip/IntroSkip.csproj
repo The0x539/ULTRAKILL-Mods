@@ -2,8 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<AssemblyName>RcHud</AssemblyName>
-		<Description>a racecar hud idk</Description>
+		<AssemblyName>IntroSkip</AssemblyName>
+		<Description>attempt to skip the game's intro</Description>
 		<Version>1.0.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
@@ -11,7 +11,7 @@
 			https://api.nuget.org/v3/index.json;
 			https://nuget.bepinex.dev/v3/index.json
 		</RestoreAdditionalProjectSources>
-		<RootNamespace>RcHud</RootNamespace>
+		<RootNamespace>IntroSkip</RootNamespace>
 		<Nullable>enable</Nullable>
 		<RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
 	</PropertyGroup>
@@ -28,17 +28,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="..\lib\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
 			<HintPath>..\lib\Assembly-CSharp.dll</HintPath>
-			<Private>False</Private>
-		</Reference>
-		<Reference Include="UnityEngine.UI">
-			<HintPath>..\lib\UnityEngine.UI.dll</HintPath>
-			<Private>False</Private>
 		</Reference>
 	</ItemGroup>
 
