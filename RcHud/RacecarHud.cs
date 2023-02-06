@@ -11,7 +11,6 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
 
     private bool initialized = false;
 
-    private GameObject overlay = new();
     private GameObject fist = new();
     private GameObject gun = new();
     private GameObject wheel = new();
@@ -30,8 +29,6 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         if (!this.TryInit()) {
             return;
         }
-
-        this.overlay.SetActive(this.crosshairReference.isActiveAndEnabled);
 
         this.UpdateFade(ref this.fistFade, this.fist);
         this.UpdateFade(ref this.gunFade, this.gun);
@@ -77,7 +74,6 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         this.crosshairReference = hudOptions.GetComponentInChildren<Crosshair>();
         this.fadeIcons = PrefsManager.Instance.GetBool("crossHairHudFade");
 
-        this.InitOverlay();
         this.InitFist(fistControl);
         this.InitGun(weaponHud);
         this.InitWheel(powerUpMeter);
@@ -85,25 +81,6 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         log.LogInfo("hud initialized");
         this.initialized = true;
         return true;
-    }
-
-    private void InitOverlay() {
-        var overlay = new GameObject("Overlay");
-
-        var canvas = overlay.AddComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 10;
-
-        var scaler = overlay.AddComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        scaler.matchWidthOrHeight = 0;
-        scaler.referenceResolution = new(1920, 1080);
-
-        var group = overlay.AddComponent<CanvasGroup>();
-        group.blocksRaycasts = false;
-
-        this.overlay = overlay;
     }
 
     private void InitFist(FistControl fistControl) {
@@ -118,7 +95,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         copyImg.copyColor = true;
 
         var rt = fist.GetComponent<RectTransform>();
-        rt.SetParent(this.overlay.GetComponent<RectTransform>());
+        rt.parent = this.crosshairReference.transform;
         rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
         rt.pivot = new(1, 0.5f);
         rt.sizeDelta = GetTexSize(icon) * Config.FistIconScale;
@@ -137,7 +114,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         copyImg.copyColor = true;
 
         var rt = gun.GetComponent<RectTransform>();
-        rt.SetParent(this.overlay.GetComponent<RectTransform>());
+        rt.parent = this.crosshairReference.transform;
         rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
         rt.pivot = new(0, 0.5f);
         rt.anchoredPosition = new(Config.GunIconOffset, 0);
@@ -155,7 +132,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         img.sprite = powerUpMeter.GetComponentInChildren<Image>().sprite;
 
         var rt = wheel.GetComponent<RectTransform>();
-        rt.SetParent(this.overlay.GetComponent<RectTransform>());
+        rt.parent = this.crosshairReference.transform;
         rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
         rt.pivot = new(0.5f, 0.5f);
         rt.sizeDelta = new(64, 64);

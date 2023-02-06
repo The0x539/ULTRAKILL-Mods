@@ -32,8 +32,9 @@ public static class Config {
     public static float FistIconScale => fistScale.Value;
     public static float GunIconScale => gunScale.Value;
 
-    public static float FistIconOffset => fistOffset.Value;
-    public static float GunIconOffset => gunOffset.Value;
+    // the game's UI is scaled for 720p but my default values were set for 1080p before the addition of aim assist support
+    public static float FistIconOffset => fistOffset.Value * 2 / 3;
+    public static float GunIconOffset => gunOffset.Value * 2 / 3;
 
     public static void Init(ConfigFile cfg) {
         refreshFistOnPunch = cfg.Bind("Refresh", "Punch", true);
