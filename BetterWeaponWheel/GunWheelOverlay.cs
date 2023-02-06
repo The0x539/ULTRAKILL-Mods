@@ -1,16 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 using BepInEx.Logging;
 
 using UnityEngine;
 using UnityEngine.UI;
-using ULTRAKILL.Cheats;
-using UnityEngine.Jobs;
-using static MonoMod.Cil.RuntimeILReferenceBag.FastDelegateInvokers;
 
-namespace RcHud;
+namespace BetterWeaponWheel;
 
 public sealed class GunWheelOverlay : MonoSingleton<GunWheelOverlay> {
     private static ManualLogSource log = new("");
