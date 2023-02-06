@@ -21,6 +21,16 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
     private float gunFade = Config.IconFadeTime;
 
     internal bool fadeIcons;
+    private bool southpaw;
+    private bool newHandedness = true;
+
+    public bool LeftHanded {
+        get => this.southpaw;
+        set {
+            this.southpaw = value;
+            this.newHandedness = true;
+        }
+    }
 
     public void RefreshFist() => this.fistFade = Config.IconFadeTime;
     public void RefreshGun() => this.gunFade = Config.IconFadeTime;
@@ -30,6 +40,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
             return;
         }
 
+        this.UpdateHandedness();
         this.UpdateFade(ref this.fistFade, this.fist);
         this.UpdateFade(ref this.gunFade, this.gun);
 
@@ -55,6 +66,30 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
     private void UpdateFade(ref float fade, GameObject icon) {
         fade = this.fadeIcons ? Mathf.MoveTowards(fade, 0, Time.deltaTime) : Config.IconFadeTime;
         icon.GetComponent<CanvasRenderer>().SetAlpha(Mathf.Min(1, fade));
+    }
+
+    private void UpdateHandedness() {
+        if (!this.newHandedness) {
+            return;
+        }
+        this.newHandedness = false;
+
+        var fistTransform = this.fist.GetComponent<RectTransform>();
+        var gunTransform = this.gun.GetComponent<RectTransform>();
+
+        if (this.southpaw) {
+            fistTransform.pivot = new(0, 0.5f);
+            fistTransform.anchoredPosition = new(Config.FistIconOffset, 0);
+
+            gunTransform.pivot = new(1, 0.5f);
+            gunTransform.anchoredPosition = new(-Config.GunIconOffset, 0);
+        } else {
+            fistTransform.pivot = new(1, 0.5f);
+            fistTransform.anchoredPosition = new(-Config.FistIconOffset, 0);
+
+            gunTransform.pivot = new(0, 0.5f);
+            gunTransform.anchoredPosition = new(Config.GunIconOffset, 0);
+        }
     }
 
     private bool TryInit() {

@@ -77,6 +77,12 @@ public sealed class Plugin : BaseUnityPlugin {
     }
 
     [HarmonyPostfix]
+    [HarmonyPatch(typeof(OptionsMenuToManager), "WeaponPosition")]
+    static void SetWeaponPos(int stuff) {
+        RacecarHud.Instance.LeftHanded = stuff == 2;
+    }
+
+    [HarmonyPostfix]
     [HarmonyPatch(typeof(WeaponWheel), "SetSegmentCount")]
     static void ReinitializeGunWheelWheelIcons(int count) {
         GunWheelOverlay.Instance.InitWheelIcons(count);
