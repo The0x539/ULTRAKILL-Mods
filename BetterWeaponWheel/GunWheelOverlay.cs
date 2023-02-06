@@ -5,6 +5,7 @@ using BepInEx.Logging;
 
 using UnityEngine;
 using UnityEngine.UI;
+using ULTRAKILL.Cheats;
 
 namespace BetterWeaponWheel;
 
@@ -61,12 +62,7 @@ public sealed class GunWheelOverlay : MonoSingleton<GunWheelOverlay> {
 
         var img = wheelIcon.GetComponent<Image>();
 
-        var slot = gunc.slots[i];
-        if (!slot.Any()) {
-            img.sprite = null;
-            img.color = Color.clear;
-            return;
-        }
+        var slot = gunc.slots.Where(slot => slot.Any()).ElementAt(i);
 
         int vIdx;
         if (isActive) {
