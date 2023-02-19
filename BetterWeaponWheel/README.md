@@ -9,5 +9,7 @@ This mod makes a few improvements:
 # Screenshots
 Please give me some good ones!
 
+[video](https://www.youtube.com/watch?v=chNBXOd1-q0)
+
 # Installation
 Same as RcHud.
