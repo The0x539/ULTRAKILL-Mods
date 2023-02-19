@@ -129,12 +129,8 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         copyImg.imgToCopy = icon;
         copyImg.copyColor = true;
 
-        var rt = fist.GetComponent<RectTransform>();
-        rt.parent = this.crosshairReference.transform;
-        rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
-        rt.pivot = new(1, 0.5f);
+        var rt = this.InitTransform(fist);
         rt.sizeDelta = GetTexSize(icon) * Config.FistIconScale;
-        rt.anchoredPosition = new(-Config.FistIconOffset, 0);
 
         this.fist = fist;
     }
@@ -148,11 +144,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         copyImg.imgToCopy = weaponHud.GetComponentInChildren<Image>();
         copyImg.copyColor = true;
 
-        var rt = gun.GetComponent<RectTransform>();
-        rt.parent = this.crosshairReference.transform;
-        rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
-        rt.pivot = new(0, 0.5f);
-        rt.anchoredPosition = new(Config.GunIconOffset, 0);
+        this.InitTransform(gun);
 
         this.gun = gun;
     }
@@ -166,10 +158,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         img.fillAmount = 0.5f;
         img.sprite = powerUpMeter.GetComponentInChildren<Image>().sprite;
 
-        var rt = wheel.GetComponent<RectTransform>();
-        rt.parent = this.crosshairReference.transform;
-        rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
-        rt.pivot = new(0.5f, 0.5f);
+        var rt = this.InitTransform(wheel);
         rt.sizeDelta = new(64, 64);
         rt.anchoredPosition = new(0, 0);
         rt.Rotate(0, 0, 180);
@@ -189,6 +178,14 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         fob.fadeOutTime = Config.WheelFadeTime;
 
         this.wheel = wheel;
+    }
+
+    private RectTransform InitTransform(GameObject obj) {
+        var rt = obj.GetComponent<RectTransform>();
+        rt.parent = this.crosshairReference.transform;
+        rt.localScale = Vector3.one * 2 / 3;
+        rt.anchorMin = rt.anchorMax = new(0.5f, 0.5f);
+        return rt;
     }
 
     private static Vector2 GetTexSize(Image icon) => new(icon.mainTexture.width, icon.mainTexture.height);
