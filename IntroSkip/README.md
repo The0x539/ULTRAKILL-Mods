@@ -1,3 +1,5 @@
 # IntroSkip
-A very simple mod that just does its best to skip the game's publisher and content warning screens as soon as it loads.
-It doesn't work *great*, but it does work, and it's pretty handy when you're repeatedly relaunching the game to test changes to your mod.
+A very simple mod that just skips the game's intro screen(s) and loads straight to the menu.
+It works pretty well now (thanks Maranara!), and it's handy for mod development when you need to keep relaunching the game.
+
+By editing the config file, you can even launch directly into a map.

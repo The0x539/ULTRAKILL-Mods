@@ -7,4 +7,4 @@ My first mod. Adds more info to the central crosshair HUD.
 Makes the weapon wheel more worth using (other than as a time slowdown tool).
 
 # [IntroSkip](IntroSkip)
-Skips the game's splash screen intros, poorly.
+Skips the game's splash screen intro, loading directly into the main menu (or a map).
