@@ -61,6 +61,8 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         var wheelImg = this.wheel.GetComponent<Image>();
         // TODO: flash white?
         wheelImg.color = wheelSlider.normalizedValue < 1 ? cbs.railcannonChargingColor : cbs.railcannonFullColor;
+
+        this.UpdateStaminaColors();
     }
 
     private void UpdateFade(ref float fade, GameObject icon) {
@@ -89,6 +91,30 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
 
             gunTransform.pivot = new(0, 0.5f);
             gunTransform.anchoredPosition = new(Config.GunIconOffset, 0);
+        }
+    }
+
+    private void UpdateStaminaColors() {
+        var cbs = ColorBlindSettings.Instance;
+        var blue = cbs.staminaColor;
+        var dark = cbs.staminaChargingColor * 0.6f; // the normal hud uses opacity, which doesn't work here for some reason
+        var red = cbs.staminaEmptyColor;
+
+        for (var i = 2; i < 5; i++) {
+            var chud = this.crosshairReference.chuds[i];
+            var stfa = chud.GetComponent<SliderToFillAmount>();
+            stfa.copyColor = false;
+            var full = chud.fillAmount == stfa.maxFill;
+            var first = i == 2;
+
+            chud.color = Config.StaminaColorMode switch {
+                0 => full ? blue : (first ? red : blue),
+                1 => blue,
+                2 => full ? blue : red,
+                3 => full ? blue : dark,
+                4 => full ? blue : (first ? red : dark),
+                _ => Color.magenta, // invalid
+            };
         }
     }
 

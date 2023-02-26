@@ -18,6 +18,9 @@ public static class Config {
     public static bool RefreshIconsOnBattleMusic => refreshOnMusic.Value;
     public static bool RefreshIconsOnBossHealthBar => refreshOnBossBar.Value;
 
+    private static ConfigEntry<int> staminaColorMode;
+    public static int StaminaColorMode => staminaColorMode.Value;
+
     private static ConfigEntry<float>
         iconFade,
         wheelFade,
@@ -42,6 +45,16 @@ public static class Config {
         refreshGunOnSwitch = cfg.Bind("Refresh", "GunSwitch", true);
         refreshOnMusic = cfg.Bind("Refresh", "BattleMusic", true);
         refreshOnBossBar = cfg.Bind("Refresh", "BossHealthBar", true);
+
+        var scmDesc = new ConfigDescription("""
+            0: vanilla behavior (first segment red while charging)
+            1: all segments blue, all the time
+            2: all segments red while charging
+            3: all segments dark blue while charging
+            4: first segment red while charging, other segments dark blue
+            (the actual colors reflect game color settings)
+            """, new AcceptableValueRange<int>(0, 4));
+        staminaColorMode = cfg.Bind("Tweaks", "StaminaColorMode", 2, scmDesc);
 
         iconFade = cfg.Bind("FadeTime", "WeaponIcons", 4.0f);
         wheelFade = cfg.Bind("FadeTime", "RailcannonMeter", 5.0f);
