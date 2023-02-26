@@ -10,13 +10,17 @@ public static class Config {
         refreshFistOnSwitch,
         refreshGunOnSwitch,
         refreshOnMusic,
-        refreshOnBossBar;
+        refreshOnBossBar,
+        hiVisOverheal,
+        persistentHp;
 
     public static bool RefreshFistOnPunch => refreshFistOnPunch.Value;
     public static bool RefreshFistOnSwitch => refreshFistOnSwitch.Value;
     public static bool RefreshGunOnSwitch => refreshGunOnSwitch.Value;
     public static bool RefreshIconsOnBattleMusic => refreshOnMusic.Value;
     public static bool RefreshIconsOnBossHealthBar => refreshOnBossBar.Value;
+    public static bool HiVisOverheal => hiVisOverheal.Value;
+    public static bool PersistentHp => persistentHp.Value;
 
     private static ConfigEntry<int> staminaColorMode;
     public static int StaminaColorMode => staminaColorMode.Value;
@@ -55,6 +59,8 @@ public static class Config {
             (the actual colors reflect game color settings)
             """, new AcceptableValueRange<int>(0, 4));
         staminaColorMode = cfg.Bind("Tweaks", "StaminaColorMode", 2, scmDesc);
+        hiVisOverheal = cfg.Bind("Tweaks", "HiVisOverheal", true, "Display overheal as a dark green ring with a different thickness");
+        persistentHp = cfg.Bind("Tweaks", "PersistentHp", true, "Prevent HP wheel from fading if damaged or overhealed");
 
         iconFade = cfg.Bind("FadeTime", "WeaponIcons", 4.0f);
         wheelFade = cfg.Bind("FadeTime", "RailcannonMeter", 5.0f);

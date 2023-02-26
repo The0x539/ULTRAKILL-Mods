@@ -80,5 +80,9 @@ public sealed class Plugin : BaseUnityPlugin {
         RacecarHud.Instance.LeftHanded = stuff == 2;
     }
 
-
+    [HarmonyPostfix]
+    [HarmonyPatch(typeof(Crosshair), "CheckCrossHair")]
+    static void UpdateCrosshairSettings() {
+        RacecarHud.Instance.ApplyHiVisOverhealSettings();
+    }
 }

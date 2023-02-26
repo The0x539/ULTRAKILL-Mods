@@ -87,6 +87,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         wheelImg.color = wheelSlider.normalizedValue < 1 ? cbs.railcannonChargingColor : cbs.railcannonFullColor;
 
         this.UpdateStaminaColors();
+        this.UpdatePersistentHp();
     }
 
     private void UpdateFade(ref float fade, GameObject icon) {
@@ -140,6 +141,47 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
                 _ => Color.magenta, // invalid
             };
         }
+    }
+
+    private void UpdatePersistentHp() {
+        if (!Config.PersistentHp) {
+            return;
+        }
+
+        var chuds = this.crosshairReference.chuds;
+        var hp = chuds[1];
+        var overheal = chuds[7];
+        var stfa = hp.GetComponent<SliderToFillAmount>();
+        if (hp.fillAmount < stfa.maxFill || overheal.fillAmount > 0) {
+            // this value is shared between both HP sliders
+            // it would take much more hackery to only persist overheal (it is possible, though)
+            stfa.mama.fadeOutTime = 2f;
+        }
+    }
+
+    public void ApplyHiVisOverhealSettings() {
+        var chuds = this.crosshairReference.chuds;
+        var circles = this.crosshairReference.circles;
+        var overheal = chuds[7];
+        var overhealDmg = chuds[6];
+
+        if (!Config.HiVisOverheal) {
+            overheal.color = new Color(0.703f, 1, 0.704f); // not sure where this is originally defined
+            // everything else already got updated by Crosshair.CheckCrossHair
+            return;
+        }
+
+        Sprite circle;
+        switch (PrefsManager.Instance.GetInt("crossHairHud")) {
+            case 1: circle = circles[2]; break; // thick covering thin
+            case 2: circle = circles[3]; break; // extra thicc covering medium
+            case 3: circle = circles[0]; break; // thin stripe on thick
+            case 4: circle = circles[1]; break; // medium stripe on extra thicc
+            default: return; // invalid value, or pref is zero (crosshair HUD disabled)
+        }
+
+        overhealDmg.sprite = overheal.sprite = circle;
+        overheal.color = Color.green * 0.65f;
     }
 
     private bool TryInit() {
