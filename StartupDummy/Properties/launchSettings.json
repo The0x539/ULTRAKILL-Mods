@@ -2,7 +2,8 @@
   "profiles": {
     "ULTRAKILL": {
       "commandName": "Executable",
-      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ULTRAKILL\\ULTRAKILL.exe"
+      "executablePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ULTRAKILL\\ULTRAKILL.exe",
+      "commandLineArgs": "--enable-console true"
     }
   }
 }
