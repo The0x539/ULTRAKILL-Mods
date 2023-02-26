@@ -1,7 +1,11 @@
-﻿using BepInEx.Logging;
+﻿using System.Reflection;
+using System.Collections.Generic;
+
+using BepInEx.Logging;
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace RcHud;
 
@@ -16,6 +20,7 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
     private GameObject wheel = new();
 
     private Crosshair crosshairReference = new();
+    private List<GameObject> fistList = new();
 
     private float fistFade = Config.IconFadeTime;
     private float gunFade = Config.IconFadeTime;
@@ -48,9 +53,28 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
         var gunTransform = this.gun.GetComponent<RectTransform>();
         gunTransform.sizeDelta = GetTexSize(gunIcon) * Config.GunIconScale;
 
+        var gunc = GunControl.Instance;
         var weaponWheelVisible = WeaponWheel.Instance.isActiveAndEnabled;
-        this.gun.SetActive(!weaponWheelVisible);
-        this.fist.SetActive(!weaponWheelVisible);
+        // the information that this HUD shows is never relevant in these secret levels
+        var inSecret = SceneManager.GetActiveScene().name is "Level 0-S" or "Level 1-S" or "Level 4-S";
+
+        var showGun = true;
+        showGun &= !weaponWheelVisible;
+        showGun &= gunc.allWeapons.Count > 1;
+        showGun &= !inSecret;
+
+        var showFist = true;
+        showFist &= !weaponWheelVisible;
+        showFist &= this.fistList.Count > 1;
+        showFist &= !inSecret;
+
+        var showWheel = true;
+        showWheel &= gunc.slot4.Count > 0;
+        showWheel &= !inSecret;
+
+        this.gun.SetActive(showGun);
+        this.fist.SetActive(showFist);
+        this.wheel.SetActive(showWheel);
 
         var weaponCharges = WeaponCharges.Instance;
         var cbs = ColorBlindSettings.Instance;
@@ -157,6 +181,9 @@ public sealed class RacecarHud : MonoSingleton<RacecarHud> {
 
         var rt = this.InitTransform(fist);
         rt.sizeDelta = GetTexSize(icon) * Config.FistIconScale;
+
+        var fieldInfo = fistControl.GetType().GetField("spawnedArms", BindingFlags.Instance | BindingFlags.NonPublic);
+        this.fistList = (List<GameObject>)fieldInfo.GetValue(fistControl);
 
         this.fist = fist;
     }
