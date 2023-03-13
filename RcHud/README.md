@@ -11,7 +11,7 @@ I do have [a video](https://www.youtube.com/watch?v=Gyw0B9_qMYc) from early in d
 
 # Installation
 - Install [BepInEx](https://github.com/BepInEx/BepInEx) (5, not 6)
-- Create a directory named `RcHud` inside `steamapps/common/ULTRAKILL/RcHud/BepInEx/plugins`
+- Create a directory named `RcHud` inside `steamapps/common/ULTRAKILL/BepInEx/plugins`
 - Put `RcHud.dll` in the directory you just created
 
 The mod is also available [on ThunderStore](https://thunderstore.io/c/ultrakill/p/The0x539/RcHud/), but *please* don't subject yourself to Overwolf.
