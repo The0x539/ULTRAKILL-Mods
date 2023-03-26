@@ -35,7 +35,6 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-		<MakeDir Directories="C:\Program Files (x86)\Steam\steamapps\common\ULTRAKILL\BepInEx\plugins\$(TargetName)" />
-		<Exec Command="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\ULTRAKILL\BepInEx\plugins\$(TargetName)&quot;" />
+		<Exec Command="copy &quot;$(TargetPath)&quot; &quot;C:\Program Files (x86)\Steam\steamapps\common\ULTRAKILL\BepInEx\plugins&quot;" />
 	</Target>
 </Project>
