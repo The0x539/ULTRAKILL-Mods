@@ -9,6 +9,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartupDummy", "StartupDummy\StartupDummy.csproj", "{174313E8-C94E-4D03-8A95-DE8B49F9B793}"
 	ProjectSection(ProjectDependencies) = postProject
 		{02E508FF-DCDC-4714-9747-D882147A9786} = {02E508FF-DCDC-4714-9747-D882147A9786}
+		{7302389F-DDC4-4F8F-A1F8-C3CD2C795B7F} = {7302389F-DDC4-4F8F-A1F8-C3CD2C795B7F}
 		{B0090E72-FF6F-42A3-AF36-376C71E8EBEB} = {B0090E72-FF6F-42A3-AF36-376C71E8EBEB}
 		{EC8BF9FE-7D80-4099-852C-2C2BEE50EB98} = {EC8BF9FE-7D80-4099-852C-2C2BEE50EB98}
 	EndProjectSection
@@ -21,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoubleDonk", "DoubleDonk\DoubleDonk.csproj", "{7302389F-DDC4-4F8F-A1F8-C3CD2C795B7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +51,10 @@ Global
 		{02E508FF-DCDC-4714-9747-D882147A9786}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02E508FF-DCDC-4714-9747-D882147A9786}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02E508FF-DCDC-4714-9747-D882147A9786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7302389F-DDC4-4F8F-A1F8-C3CD2C795B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7302389F-DDC4-4F8F-A1F8-C3CD2C795B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7302389F-DDC4-4F8F-A1F8-C3CD2C795B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7302389F-DDC4-4F8F-A1F8-C3CD2C795B7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
