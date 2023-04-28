@@ -4,7 +4,7 @@
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<AssemblyName>IntroSkip</AssemblyName>
 		<Description>attempt to skip the game's intro</Description>
-		<Version>3.0.0</Version>
+		<Version>4.0.0</Version>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<LangVersion>latest</LangVersion>
 		<RestoreAdditionalProjectSources>
