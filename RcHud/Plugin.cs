@@ -34,7 +34,7 @@ public sealed class Plugin : BaseUnityPlugin {
     }
 
     [HarmonyPrefix]
-    [HarmonyPatch(typeof(FistControl), "UpdateFistIcon")]
+    [HarmonyPatch(typeof(FistControl), nameof(FistControl.UpdateFistIcon))]
     static void RefreshFistIconOnSwitch() {
         if (RcHud.Config.RefreshFistOnSwitch) {
             RacecarHud.Instance.RefreshFist();
@@ -42,7 +42,6 @@ public sealed class Plugin : BaseUnityPlugin {
     }
 
     [HarmonyPrefix]
-    [HarmonyPatch(typeof(FistControl), "UpdateFistIcon")]
     [HarmonyPatch(typeof(Punch), "PunchStart")]
     static void RefreshFistIconOnPunch() {
         if (RcHud.Config.RefreshFistOnPunch) {
@@ -51,8 +50,9 @@ public sealed class Plugin : BaseUnityPlugin {
     }
 
     [HarmonyPrefix]
-    [HarmonyPatch(typeof(GunControl), "SwitchWeapon", new Type[] { typeof(int) })]
-    [HarmonyPatch(typeof(GunControl), "SwitchWeapon", new Type[] { typeof(int), typeof(List<GameObject>), typeof(bool), typeof(bool) })]
+    [HarmonyPatch(typeof(GunControl), nameof(GunControl.SwitchWeapon))]
+    [HarmonyPatch(new Type[] { typeof(int) })]
+    [HarmonyPatch(new Type[] { typeof(int), typeof(List<GameObject>), typeof(bool), typeof(bool), typeof(bool) })]
     static void RefreshGunIcon() {
         if (RcHud.Config.RefreshGunOnSwitch) {
             RacecarHud.Instance.RefreshGun();
@@ -69,19 +69,19 @@ public sealed class Plugin : BaseUnityPlugin {
     }
 
     [HarmonyPostfix]
-    [HarmonyPatch(typeof(HUDOptions), "HudFade")]
+    [HarmonyPatch(typeof(HUDOptions), nameof(HUDOptions.HudFade))]
     static void SetIconFade(bool stuff) {
         RacecarHud.Instance.fadeIcons = stuff;
     }
 
     [HarmonyPostfix]
-    [HarmonyPatch(typeof(OptionsMenuToManager), "WeaponPosition")]
+    [HarmonyPatch(typeof(OptionsMenuToManager), nameof(OptionsMenuToManager.WeaponPosition))]
     static void SetWeaponPos(int stuff) {
         RacecarHud.Instance.LeftHanded = stuff == 2;
     }
 
     [HarmonyPostfix]
-    [HarmonyPatch(typeof(Crosshair), "CheckCrossHair")]
+    [HarmonyPatch(typeof(Crosshair), nameof(Crosshair.CheckCrossHair))]
     static void UpdateCrosshairSettings() {
         RacecarHud.Instance.ApplyHiVisOverhealSettings();
     }
