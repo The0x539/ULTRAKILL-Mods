@@ -1,15 +1,15 @@
 # BetterWeaponWheel
-I don't really use the weapon wheel in ULTRAKILL, but that's in part because it kinda sucks.
-This mod makes a few improvements:
+This mod used to be a sort of predecessor to the weapon wheel changes made in patch 13a.
+Now the improvements it provides are a lot more minor:
 
-- There are now icons on each segment that indicate which weapon you're selecting.
-- The segments will actually match what you have equipped. If you unequip some weapons, there can be fewer than three segments. If you enable the spawner arm or have some modded weapons, there can be more than five.
-- There's a tiny cursor that indicates your mouse position within the wheel.
+- The weapon icons represent the actual weapon that you'd be switching to, not just the first weapon in the slot.
+- The highlight color for the icon is the color of the weapon, rather than always red.
+- There's a tiny cursor to indicate your mouse position within the wheel.
 
 # Screenshots
 Please give me some good ones!
 
-[video](https://www.youtube.com/watch?v=chNBXOd1-q0)
+[video of old version](https://www.youtube.com/watch?v=chNBXOd1-q0)
 
 # Installation
 Same as RcHud.
