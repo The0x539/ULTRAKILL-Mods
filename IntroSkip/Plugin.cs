@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 using BepInEx;
 using HarmonyLib;
+using System.Reflection;
 
 namespace IntroSkip;
 
@@ -23,6 +24,8 @@ public sealed class Plugin : BaseUnityPlugin {
     [HarmonyPatch(typeof(IntroViolenceScreen), "Start")]
     [HarmonyPrefix]
     public static bool KillIntro(IntroViolenceScreen __instance, ref GameObject ___loadingScreen) {
+        var pendingScene = typeof(SceneHelper).GetProperty("PendingScene", BindingFlags.Static | BindingFlags.Public);
+        pendingScene.SetValue(null, null);
         SceneHelper.LoadScene(targetScene);
         __instance.gameObject.SetActive(false);
         ___loadingScreen.SetActive(true);
