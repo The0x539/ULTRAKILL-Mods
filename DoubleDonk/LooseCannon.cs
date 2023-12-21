@@ -1,11 +1,6 @@
 ﻿using System;
-using System.ComponentModel.Design;
-using System.Linq;
-
-using ULTRAKILL.Cheats;
 
 using UnityEngine;
-using UnityEngine.ProBuilder;
 using UnityEngine.UI;
 
 namespace DoubleDonk;
@@ -31,7 +26,7 @@ public sealed class LooseCannon : MonoBehaviour {
     private bool reloading = false;
 
     private static GameObject BuildCannonballPrefab() {
-        var srsCannon = GunSetter.Instance.rocketGreen[0].GetComponent<RocketLauncher>();
+        var srsCannon = GunSetter.Instance.rocketGreen[0].ToAsset().GetComponent<RocketLauncher>();
         var originalPrefab = srsCannon.cannonBall.gameObject;
 
         var obj = Instantiate(originalPrefab);

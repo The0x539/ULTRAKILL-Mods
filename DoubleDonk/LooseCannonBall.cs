@@ -1,10 +1,6 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DoubleDonk;
 
@@ -68,7 +64,7 @@ public sealed class LooseCannonBall : MonoBehaviour {
     private void Explode() {
         Destroy(this.gameObject);
 
-        Instantiate(GunSetter.Instance.shotgunGrenade[0].GetComponent<Shotgun>().explosion, this.rb.position, Quaternion.identity);
+        Instantiate(GunSetter.Instance.shotgunGrenade[0].ToAsset().GetComponent<Shotgun>().explosion, this.rb.position, Quaternion.identity);
 
         var hits = Physics.OverlapSphere(this.rb.position, 3);
         foreach (var hit in hits) {

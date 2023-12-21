@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using BepInEx;
+﻿using BepInEx;
 
 using HarmonyLib;
 
@@ -17,7 +14,7 @@ public class Plugin : BaseUnityPlugin {
     [HarmonyPostfix]
     private static void AddLooseCannon() {
         var gunSetter = GunSetter.Instance;
-        var shotgunPrefab = gunSetter.shotgunGrenade[0];
+        var shotgunPrefab = gunSetter.shotgunGrenade[0].ToAsset();
 
         var looseCannon = Instantiate(shotgunPrefab, gunSetter.transform);
         looseCannon.AddComponent<LooseCannon>();
