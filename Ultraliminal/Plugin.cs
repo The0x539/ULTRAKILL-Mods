@@ -28,6 +28,7 @@ sealed class ForcedPerspective : MonoBehaviour {
 
     public void Update() {
         var scaleFactor = this.ComputeDistance() / this.baseDistance;
+        scaleFactor = Mathf.Clamp(scaleFactor, 0.5f, 100f);
         this.transform.localScale = scaleFactor * this.baseScale;
     }
 
