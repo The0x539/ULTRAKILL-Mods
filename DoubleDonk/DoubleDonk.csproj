@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
@@ -30,18 +30,23 @@
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp">
 			<HintPath>..\lib\Assembly-CSharp.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
 		<Reference Include="Unity.ProBuilder">
 		  <HintPath>..\lib\Unity.ProBuilder.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
 		<Reference Include="UnityEngine.UI">
 			<HintPath>..\lib\UnityEngine.UI.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
 		<Reference Include="Unity.Addressables">
 			<HintPath>..\lib\Unity.Addressables.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
 		<Reference Include="Unity.ResourceManager">
 			<HintPath>..\lib\Unity.ResourceManager.dll</HintPath>
+			<Private>False</Private>
 		</Reference>
 	</ItemGroup>
 
