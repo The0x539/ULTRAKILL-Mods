@@ -10,16 +10,16 @@ public sealed class Plugin : BaseUnityPlugin {
         Harmony.CreateAndPatchAll(this.GetType());
     }
 
-    // Prevent leaderboard submsisions by making this mod count as a major assist
-    public void Update() {
-        StatsManager.Instance.majorUsed = true;
-    }
-
     [HarmonyPrefix]
     [HarmonyPatch(typeof(EnemyIdentifier), "Awake")]
     static void AddForcedPerspective(EnemyIdentifier __instance) {
         __instance.gameObject.AddComponent<ForcedPerspective>();
     }
+
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitLevelScore))]
+    [HarmonyPatch(typeof(LeaderboardController), nameof(LeaderboardController.SubmitCyberGrindScore))]
+    static bool DisableLeaderboardSubmissions() => false;
 }
 
 sealed class ForcedPerspective : MonoBehaviour {
