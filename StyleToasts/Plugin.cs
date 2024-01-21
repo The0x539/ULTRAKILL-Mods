@@ -30,6 +30,8 @@ public sealed class Plugin : BaseUnityPlugin {
         return pos;
     }
 
+    private static float scatterAmount = 0;
+
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Coin), "RicoshotPointsCheck")]
     static void OnRicoshot(Rigidbody ___rb) {
@@ -56,7 +58,7 @@ public sealed class Plugin : BaseUnityPlugin {
         var name = __instance.GetLocalizedName(pointID);
         if (name == "") return;
 
-        var offset = Random.insideUnitSphere * 10;
+        var offset = Random.insideUnitSphere * scatterAmount;
         offset.x = 0;
         pos += offset;
 
@@ -73,6 +75,14 @@ public sealed class Plugin : BaseUnityPlugin {
         }
 
         SpawnText(pos, scale, text);
+
+        // scatter amount increases with every spawn, up to a limit of 10 units...
+        scatterAmount = Mathf.MoveTowards(scatterAmount, 10, 3);
+    }
+
+    public void Update() {
+        // ...and decays back to zero over a couple seconds
+        scatterAmount = Mathf.MoveTowards(scatterAmount, 0, 3 * Time.deltaTime);
     }
 
     private static void SpawnText(Vector3 position, float scale, string text) {
