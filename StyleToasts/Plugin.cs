@@ -1,4 +1,6 @@
-﻿using BepInEx;
+﻿using System.Collections.Generic;
+
+using BepInEx;
 
 using HarmonyLib;
 
@@ -12,45 +14,72 @@ public sealed class Plugin : BaseUnityPlugin {
         Harmony.CreateAndPatchAll(this.GetType());
     }
 
+    private static readonly HashSet<string> ignoredBonuses = [
+        "ultrakill.projectileboost",
+        "ultrakill.disrespect",
+        "ultrakill.quickdraw",
+        "ultrakill.parry",
+        "ultrakill.kill",
+    ];
+
     private static Vector3? styleLocation = null;
+
+    private static Vector3? TakeStyleLocation() {
+        var pos = styleLocation;
+        styleLocation = null;
+        return pos;
+    }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(Coin), "RicoshotPointsCheck")]
-    static void RicoshotPointsCheck(Rigidbody ___rb) {
+    static void OnRicoshot(Rigidbody ___rb) {
         styleLocation = ___rb.position;
     }
 
     [HarmonyPrefix]
     [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.AddPoints))]
-    static void Foo(string pointID, EnemyIdentifier eid) {
-        if (eid is null || pointID is not ("ultrakill.fireworks" or "ultrakill.instakill")) {
+    static void OnAddPoints(string pointID, EnemyIdentifier eid) {
+        if (eid is null || ignoredBonuses.Contains(pointID)) {
             return;
         }
 
-        var rb = eid.GetComponent<Rigidbody>();
-        styleLocation ??= rb.worldCenterOfMass;
+        if (eid.TryGetComponent<Rigidbody>(out var rb)) {
+            styleLocation ??= rb.worldCenterOfMass;
+        }
     }
 
     [HarmonyPostfix]
     [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.AddPoints))]
-    static void Bar(StyleHUD __instance, string pointID, int count, string prefix, string postfix) {
-        var pos = styleLocation;
-        styleLocation = null;
-        if (pos == null) {
-            return;
-        }
+    static void AfterAddPoints(StyleHUD __instance, string pointID, int count, string prefix, string postfix) {
+        if (TakeStyleLocation() is not Vector3 pos) return;
 
-        var text = string.Concat("+ ", prefix, __instance.GetLocalizedName(pointID), postfix);
+        var name = __instance.GetLocalizedName(pointID);
+        if (name == "") return;
+
+        var offset = Random.insideUnitSphere * 10;
+        offset.x = 0;
+        pos += offset;
+
+        var text = string.Concat("+ ", prefix, name, postfix);
+
+        var scale = pointID switch {
+            "ultrakill.bigkill" => 0.04f,
+            _ => 0.02f,
+        };
+
         if (count >= 0) {
             text += $" x{count}";
+            scale *= count;
         }
 
-        SpawnText(pos.Value, text);
+        SpawnText(pos, scale, text);
     }
 
-    private static void SpawnText(Vector3 position, string text) {
+    private static void SpawnText(Vector3 position, float scale, string text) {
         var obj = new GameObject();
-        obj.AddComponent<ToastText>().Text = text;
-        obj.transform.position = position;
+        var toast = obj.AddComponent<ToastText>();
+        toast.Text = text;
+        toast.Size = Vector3.one * scale;
+        toast.transform.position = position;
     }
 }

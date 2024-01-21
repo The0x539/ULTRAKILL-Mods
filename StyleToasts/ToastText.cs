@@ -5,11 +5,17 @@ namespace StyleToasts;
 
 public sealed class ToastText : MonoBehaviour {
     private Text textComponent;
+    private RectTransform rectComponent;
     private float age = 0;
 
     public string Text {
         get => this.textComponent.text;
         set => this.textComponent.text = value;
+    }
+
+    public Vector3 Size {
+        get => this.rectComponent.localScale;
+        set => this.rectComponent.localScale = value;
     }
 
     public void Awake() {
@@ -21,6 +27,7 @@ public sealed class ToastText : MonoBehaviour {
         rt.parent = ToastSingleton.Instance.Overlay.transform;
         rt.localScale = Vector3.one * 0.02f;
         rt.sizeDelta = Vector2.one * 500;
+        this.rectComponent = rt;
 
         var text = obj.AddComponent<Text>();
         text.font = ToastSingleton.Instance.Font;
@@ -50,7 +57,7 @@ public sealed class ToastText : MonoBehaviour {
         var distanceScale = Mathf.Log10(delta.magnitude);
 
         this.transform.Translate(Vector3.up * Time.deltaTime * distanceScale);
-        this.transform.localScale = Vector3.one * 0.02f * distanceScale;
+        //this.transform.localScale = Vector3.one * 0.02f * distanceScale;
         this.transform.LookAt(myPos - delta);
     }
 }
