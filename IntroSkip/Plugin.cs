@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using BepInEx;
 using HarmonyLib;
 using System.Reflection;
+using System;
 
 namespace IntroSkip;
 
@@ -17,7 +18,7 @@ public sealed class Plugin : BaseUnityPlugin {
         }
 
         var configEntry = this.Config.Bind("IntroSkip", "TargetScene", "Main Menu");
-        targetScene = configEntry.Value;
+        targetScene = GetSceneArg() ?? configEntry.Value;
         Harmony.CreateAndPatchAll(this.GetType());
     }
 
@@ -31,5 +32,16 @@ public sealed class Plugin : BaseUnityPlugin {
         ___loadingScreen.SetActive(true);
         Cursor.visible = false;
         return false;
+    }
+
+    private static string? GetSceneArg() {
+        try {
+            var args = Environment.GetCommandLineArgs();
+            var i = Array.IndexOf(args, "--scene");
+            if (i < 0) return null;
+            return args[i + 1];
+        } catch {
+            return null;
+        }
     }
 }
