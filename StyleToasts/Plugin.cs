@@ -39,6 +39,14 @@ public sealed class Plugin : BaseUnityPlugin {
     }
 
     [HarmonyPrefix]
+    [HarmonyPatch(typeof(Gutterman), nameof(Gutterman.ShieldBreak))]
+    static void OnShieldBreak(bool player, Rigidbody ___rb) {
+        if (player) {
+            styleLocation = ___rb.position;
+        }
+    }
+
+    [HarmonyPrefix]
     [HarmonyPatch(typeof(StyleHUD), nameof(StyleHUD.AddPoints))]
     static void OnAddPoints(string pointID, EnemyIdentifier eid) {
         if (eid is null || ignoredBonuses.Contains(pointID)) {
