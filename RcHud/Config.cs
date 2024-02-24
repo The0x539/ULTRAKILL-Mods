@@ -57,18 +57,23 @@ public static class Config {
             3: all segments dark blue while charging
             4: first segment red while charging, other segments dark blue
             (the actual colors reflect game color settings)
-            """, new AcceptableValueRange<int>(0, 4));
+            """, new AcceptableValueList<int>([0, 1, 2, 3, 4]));
+
         staminaColorMode = cfg.Bind("Tweaks", "StaminaColorMode", 2, scmDesc);
         hiVisOverheal = cfg.Bind("Tweaks", "HiVisOverheal", true, "Display overheal as a dark green ring with a different thickness");
         persistentHp = cfg.Bind("Tweaks", "PersistentHp", true, "Prevent HP wheel from fading if damaged or overhealed");
 
-        iconFade = cfg.Bind("FadeTime", "WeaponIcons", 4.0f);
-        wheelFade = cfg.Bind("FadeTime", "RailcannonMeter", 5.0f);
+        iconFade = cfg.Bind("FadeTime", "WeaponIcons", 4.0f, AcceptableRange(0f, 30f));
+        wheelFade = cfg.Bind("FadeTime", "RailcannonMeter", 5.0f, AcceptableRange(0f, 30f));
 
-        fistScale = cfg.Bind("IconScale", "Fist", 1.25f);
-        gunScale = cfg.Bind("IconScale", "Gun", 0.1f);
+        fistScale = cfg.Bind("IconScale", "Fist", 1.25f, AcceptableRange(0f, 10f));
+        gunScale = cfg.Bind("IconScale", "Gun", 0.1f, AcceptableRange(0f, 10f));
 
-        fistOffset = cfg.Bind("IconOffset", "Fist", 50f);
-        gunOffset = cfg.Bind("IconOffset", "Gun", 45f);
+        fistOffset = cfg.Bind("IconOffset", "Fist", 50f, AcceptableRange(0f, 1000f));
+        gunOffset = cfg.Bind("IconOffset", "Gun", 45f, AcceptableRange(0f, 1000f));
+    }
+
+    private static ConfigDescription AcceptableRange<T>(T min, T max) where T : System.IComparable {
+        return new("", new AcceptableValueRange<T>(min, max));
     }
 }
